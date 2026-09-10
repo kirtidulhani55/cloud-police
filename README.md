@@ -2,37 +2,35 @@
 
 
 
-Cloud Police is an AI-assisted multi-cloud operations and governance platform built with Google Cloud, Gemini and Google Agent Development Kit (ADK). It detects operational risks across AWS, Azure and Google Cloud, connects supporting evidence and presents recommendations for verified human review.
+\### AI-Assisted Multi-Cloud Governance with Human Approval
 
 
 
-\## Live Application
+Cloud Police detects operational risks across AWS, Azure and Google Cloud. It uses Google ADK and Gemini to connect supporting evidence and prepare recommendations for verified human review.
 
 
 
-https://cloud-police-website-794315906908.us-east1.run.app
+\[Open the Live Cloud Police Application](https://cloud-police-website-794315906908.us-east1.run.app)
 
 
 
-\## Key Features
+\## What Cloud Police Does
 
 
 
-\* Multi-cloud incident, cost and infrastructure-change monitoring
+\- Monitors multi-cloud incidents, cost anomalies and proposed changes
 
-\* Gemini-generated, evidence-grounded diagnoses
+\- Generates evidence-grounded diagnoses using Gemini
 
-\* Five-agent Google ADK architecture
+\- Coordinates five specialized agents through Google ADK
 
-\* Admin, Approver and Operator role separation
+\- Separates Admin, Approver and Operator permissions
 
-\* Approve, reject and request-evidence workflows
+\- Supports approval, rejection and additional-evidence requests
 
-\* Audited Admin reopening of finalized cases
+\- Records decisions, reviewer identity and timestamps in BigQuery
 
-\* BigQuery evidence and decision history
-
-\* No automatic infrastructure changes
+\- Prevents AI from automatically applying infrastructure changes
 
 
 
@@ -40,23 +38,23 @@ https://cloud-police-website-794315906908.us-east1.run.app
 
 
 
-1\. \*\*Diagnosis Agent\*\* investigates incidents, firewall logs and connectivity failures.
+1\. Diagnosis Agent — investigates incidents, firewall logs and connectivity failures.
 
-2\. \*\*Cost Agent\*\* identifies cloud-spending anomalies.
+2\. Cost Agent — identifies unusual cloud spending.
 
-3\. \*\*Change Inspector Agent\*\* assesses proposed infrastructure changes.
+3\. Change Inspector Agent — assesses proposed infrastructure changes.
 
-4\. \*\*Remediation Agent\*\* drafts non-executable Terraform plans, tests and rollback guidance.
+4\. Remediation Agent — drafts non-executable Terraform plans, tests and rollback guidance.
 
-5\. \*\*Root Orchestrator\*\* coordinates the specialist agents and combines their findings.
-
-
-
-\## Architecture Flow
+5\. Root Orchestrator — coordinates the specialist agents and combines their findings.
 
 
 
-Multi-cloud signals → BigQuery evidence → Scheduled Cloud Run monitoring → Google ADK and Gemini analysis → Authenticated Cloud Police console → Human review and approval
+\## Architecture
+
+
+
+Multi-cloud signals → BigQuery evidence → Scheduled Cloud Run monitoring → Google ADK and Gemini analysis → Authenticated console → Human review and approval
 
 
 
@@ -64,25 +62,25 @@ Multi-cloud signals → BigQuery evidence → Scheduled Cloud Run monitoring →
 
 
 
-\* BigQuery
+| Service | Purpose |
 
-\* Cloud Run
+|---|---|
 
-\* Cloud Scheduler
+| BigQuery | Stores telemetry, incidents, evidence and decision history |
 
-\* Vertex AI with Gemini
+| Cloud Run | Hosts the website, APIs and monitoring workload |
 
-\* Google Agent Development Kit
+| Cloud Scheduler | Invokes scheduled monitoring |
 
-\* Identity Platform
+| Vertex AI with Gemini | Generates diagnoses and recommendations |
 
-\* Cloud Build
+| Google ADK | Coordinates the five-agent system |
 
-\* Artifact Registry
+| Identity Platform | Authenticates console users |
 
-\* IAM
+| Cloud Build and Artifact Registry | Builds and stores container images |
 
-\* Cloud Logging
+| IAM and Cloud Logging | Controls access and provides operational visibility |
 
 
 
@@ -90,15 +88,19 @@ Multi-cloud signals → BigQuery evidence → Scheduled Cloud Run monitoring →
 
 
 
-\* \*\*Backend:\*\* Python, Flask, Gunicorn and REST APIs
+| Layer | Technologies |
 
-\* \*\*Frontend:\*\* React, TypeScript, Vite, Node.js and Express
+|---|---|
 
-\* \*\*AI:\*\* Google ADK and Gemini through Vertex AI
+| Backend | Python, Flask, Gunicorn and REST APIs |
 
-\* \*\*Infrastructure:\*\* Docker, Cloud Run, BigQuery and Cloud Scheduler
+| Frontend | React, TypeScript, Vite, Node.js and Express |
 
-\* \*\*Authentication:\*\* Google Cloud Identity Platform
+| AI | Google ADK and Gemini through Vertex AI |
+
+| Infrastructure | Docker, Cloud Run, BigQuery and Cloud Scheduler |
+
+| Authentication | Google Cloud Identity Platform |
 
 
 
@@ -106,7 +108,11 @@ Multi-cloud signals → BigQuery evidence → Scheduled Cloud Run monitoring →
 
 
 
-Cloud Police uses a human-in-the-loop governance model. AI agents can detect, explain and recommend, but cannot execute infrastructure changes. Approvers can approve, reject or request additional evidence. Operators cannot make approval decisions. Only an Admin can reopen a finalized case, and the action is recorded.
+Cloud Police follows a human-in-the-loop governance model. AI agents can detect, explain and recommend, but cannot execute infrastructure changes.
+
+
+
+Approvers can approve, reject or request additional evidence. Operators cannot make approval decisions. Only an Admin can reopen a finalized case, and every reopening action is recorded.
 
 
 
@@ -114,7 +120,7 @@ Cloud Police uses a human-in-the-loop governance model. AI agents can detect, ex
 
 
 
-A synthetic Azure connectivity signal was written to BigQuery. Scheduled monitoring detected the case, and Gemini generated a diagnosis linking firewall, connectivity and Terraform evidence. The incident appeared in the console for human review without automatically changing infrastructure.
+A synthetic Azure connectivity signal was written to BigQuery. Scheduled monitoring detected the case, and Gemini generated a diagnosis connecting firewall, connectivity and Terraform evidence. The incident appeared in the console for human review without automatically changing infrastructure.
 
 
 
@@ -122,9 +128,13 @@ A synthetic Azure connectivity signal was written to BigQuery. Scheduled monitor
 
 
 
-\* `backend/` — Python APIs, monitoring workflow, agents and automated tests
+```text
 
-\* `frontend/` — React and TypeScript website
+backend/   Python APIs, monitoring workflow, agents and automated tests
+
+frontend/  React and TypeScript application
+
+```
 
 
 
@@ -132,7 +142,7 @@ A synthetic Azure connectivity signal was written to BigQuery. Scheduled monitor
 
 
 
-Backend:
+Backend tests:
 
 
 
@@ -150,7 +160,7 @@ py -m venv .venv
 
 
 
-Frontend:
+Frontend validation:
 
 
 
@@ -168,11 +178,11 @@ npm run build
 
 
 
-\## Access
+\## Application Access
 
 
 
-The landing page is publicly accessible. The protected console and APIs require an Identity Platform account and an assigned application role. Controlled reviewer credentials are supplied separately to submission evaluators.
+The landing page is publicly accessible. The protected console and APIs require an Identity Platform account with an assigned application role. Controlled reviewer credentials are provided separately to submission evaluators.
 
 
 
@@ -181,6 +191,4 @@ The landing page is publicly accessible. The protected console and APIs require 
 
 
 Kirti Dulhani
-
-
 
