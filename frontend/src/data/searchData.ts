@@ -1,0 +1,210 @@
+import { DemonstrationType, Provider, RiskLevel } from '../types';
+
+export type SearchItemCategory = 'INCIDENT' | 'RESOURCE' | 'POLICY';
+
+export interface SearchItem {
+  id: string;
+  title: string;
+  category: SearchItemCategory;
+  categoryLabel: string;
+  provider: Provider | 'Multi-Cloud';
+  description: string;
+  targetModal?: DemonstrationType;
+  tags: string[];
+  severity?: RiskLevel;
+  resourceType?: string;
+  policyCode?: string;
+  statusBadge?: string;
+}
+
+export const GLOBAL_SEARCH_ITEMS: SearchItem[] = [
+  // --- INCIDENTS & ANOMALIES ---
+  {
+    id: 'INC-AZ-9402',
+    title: 'Azure Application Cannot Reach Database',
+    category: 'INCIDENT',
+    categoryLabel: 'Incident',
+    provider: 'Azure',
+    description: 'Firewall allow rule removed on port 1433; application server connectivity to SQL database is blocked.',
+    targetModal: 'network',
+    severity: 'CRITICAL',
+    tags: ['incident', 'azure', 'sql', 'database', 'port 1433', '1433', 'firewall', 'network', 'outage', 'unreachable', 'critical'],
+    statusBadge: 'Critical Risk',
+  },
+  {
+    id: 'COST-AWS-3180',
+    title: 'AWS EC2 Compute Cost Anomaly',
+    category: 'INCIDENT',
+    categoryLabel: 'Cost Anomaly',
+    provider: 'AWS',
+    description: 'Daily compute spend increased from $55 to $125/day (+$2,100/mo) after worker instance tier escalation with only 4.2% CPU utilization.',
+    targetModal: 'cost',
+    severity: 'HIGH',
+    tags: ['cost', 'aws', 'ec2', 'instance', 'compute', 'spending', 'anomaly', 'billing', 'finops', 'surge', '$2,100', 'high compute'],
+    statusBadge: '+$2,100 / mo',
+  },
+  {
+    id: 'CHG-PLAN-8821',
+    title: 'Multi-Cloud Proposed Change Set',
+    category: 'INCIDENT',
+    categoryLabel: 'Change Plan',
+    provider: 'Multi-Cloud',
+    description: 'Terraform plan with 3 modifications: Azure firewall deletion (Critical), AWS EC2 resize (High Cost), and GCP cluster metadata tags (Safe).',
+    targetModal: 'change',
+    severity: 'HIGH',
+    tags: ['change', 'terraform', 'iac', 'plan', 'multi-cloud', 'azure', 'aws', 'gcp', 'metadata', 'blast radius', 'preflight', 'inspection'],
+    statusBadge: '3 Changes Scanned',
+  },
+
+  // --- CLOUD RESOURCES ---
+  {
+    id: 'RES-AZ-SQL-01',
+    title: 'Azure SQL Database (sqldb-prod-01)',
+    category: 'RESOURCE',
+    categoryLabel: 'Cloud Resource',
+    provider: 'Azure',
+    resourceType: 'Microsoft.Sql/servers/databases',
+    description: 'Production relational SQL database listening on port 1433. Currently unreachable due to deleted NSG allow rule.',
+    targetModal: 'network',
+    severity: 'CRITICAL',
+    tags: ['resource', 'azure', 'sql', 'database', 'port 1433', '1433', 'sqldb-prod-01', 'tcp', 'storage', 'data'],
+    statusBadge: 'Unreachable (Port 1433)',
+  },
+  {
+    id: 'RES-AZ-NSG-FW',
+    title: 'Azure NSG Firewall Rule (allow_sql_1433)',
+    category: 'RESOURCE',
+    categoryLabel: 'Cloud Resource',
+    provider: 'Azure',
+    resourceType: 'Microsoft.Network/networkSecurityGroups/securityRules',
+    description: 'Inbound network security group rule for SQL port 1433. Removed in Terraform commit #881 causing default deny fallback.',
+    targetModal: 'network',
+    severity: 'CRITICAL',
+    tags: ['resource', 'azure', 'firewall', 'nsg', 'security rule', 'allow_sql', 'port 1433', '1433', 'terraform', 'commit 881'],
+    statusBadge: 'Deleted in Commit #881',
+  },
+  {
+    id: 'RES-AWS-EC2-WORKER',
+    title: 'AWS EC2 Worker Instance (i-09a482b1c)',
+    category: 'RESOURCE',
+    categoryLabel: 'Cloud Resource',
+    provider: 'AWS',
+    resourceType: 'AWS::EC2::Instance',
+    description: 'Background worker compute instance resized from standard to high-compute tier; runs underutilized at 4.2% average CPU.',
+    targetModal: 'cost',
+    severity: 'HIGH',
+    tags: ['resource', 'aws', 'ec2', 'instance', 'worker', 'i-09a482b1c', 'high-compute', 'compute', 'underutilized', 'cpu 4.2%'],
+    statusBadge: 'Underutilized (4.2% CPU)',
+  },
+  {
+    id: 'RES-GCP-GKE-META',
+    title: 'GCP GKE Cluster Metadata (prod-cluster-01)',
+    category: 'RESOURCE',
+    categoryLabel: 'Cloud Resource',
+    provider: 'GCP',
+    resourceType: 'container.googleapis.com/Cluster',
+    description: 'Kubernetes production cluster receiving updated team ownership and cost center metadata tags (owner=engineering-ops).',
+    targetModal: 'change',
+    severity: 'SAFE',
+    tags: ['resource', 'gcp', 'gke', 'cluster', 'kubernetes', 'metadata', 'labels', 'tags', 'owner', 'engineering-ops', 'safe'],
+    statusBadge: 'Safe Tag Update',
+  },
+  {
+    id: 'RES-BQ-TELEMETRY',
+    title: 'BigQuery Cloud Telemetry Warehouse',
+    category: 'RESOURCE',
+    categoryLabel: 'Telemetry Source',
+    provider: 'Multi-Cloud',
+    resourceType: 'bigquery.googleapis.com/Dataset',
+    description: 'Dataset storing firewall packet logs, CloudWatch billing metrics, and Terraform change records for diagnostic correlation.',
+    targetModal: 'network',
+    severity: 'SAFE',
+    tags: ['resource', 'bigquery', 'telemetry', 'logs', 'evidence', 'billing records', 'firewall logs', 'audit', 'cloud_governance'],
+    statusBadge: 'Evidence Source',
+  },
+
+  // --- GOVERNANCE POLICIES ---
+  {
+    id: 'POL-HUMAN-APPROVAL',
+    title: 'Mandatory Human-in-the-Loop Approval',
+    category: 'POLICY',
+    categoryLabel: 'Core Policy',
+    provider: 'Multi-Cloud',
+    policyCode: 'MANDATORY_HUMAN_APPROVAL_REQUIRED',
+    description: 'Zero automated modifications policy: Cloud Police provides recommendations only; no cloud infrastructure change is ever executed without human authorization.',
+    tags: ['policy', 'governance', 'human approval', 'human in the loop', 'guardrail', 'safety', 'mandatory', 'authorization', 'read only'],
+    statusBadge: 'Enforced (Read-Only)',
+  },
+  {
+    id: 'POL-DEFAULT-DENY',
+    title: 'Default-Deny Inbound Traffic Baseline',
+    category: 'POLICY',
+    categoryLabel: 'Security Policy',
+    provider: 'Azure',
+    policyCode: 'DEFAULT_DENY_NETWORK_RULE',
+    description: 'Security baseline requiring all inbound ports without an explicit allow rule to default to deny to prevent unauthorized perimeter exposure.',
+    targetModal: 'network',
+    tags: ['policy', 'security', 'default deny', 'firewall', 'network security', 'nsg', 'perimeter', 'azure', 'port 1433'],
+    statusBadge: 'Active Security Baseline',
+  },
+  {
+    id: 'POL-FINOPS-RIGHTSIZE',
+    title: 'FinOps Compute Right-Sizing Policy',
+    category: 'POLICY',
+    categoryLabel: 'Cost Policy',
+    provider: 'AWS',
+    policyCode: 'FINOPS_RIGHTSIZING_UNDERUTILIZED_COMPUTE',
+    description: 'Cost governance rule: Compute instances averaging <10% CPU utilization over 7 days are flagged for right-sizing or prohibited from tier escalation.',
+    targetModal: 'cost',
+    tags: ['policy', 'finops', 'cost', 'rightsizing', 'underutilized', 'cpu', 'aws', 'ec2', 'spending', 'budget'],
+    statusBadge: 'Cost Guardrail',
+  },
+  {
+    id: 'POL-IAC-PREFLIGHT',
+    title: 'IaC Pre-Flight Blast Radius Validation',
+    category: 'POLICY',
+    categoryLabel: 'Change Policy',
+    provider: 'Multi-Cloud',
+    policyCode: 'IAC_PREFLIGHT_BLAST_RADIUS_INSPECTION',
+    description: 'Change governance rule: All Terraform / OpenTofu plans modifying network access or compute sizing must undergo automated blast radius inspection before CI/CD apply.',
+    targetModal: 'change',
+    tags: ['policy', 'iac', 'terraform', 'preflight', 'blast radius', 'change inspection', 'opentofu', 'cicd', 'multi-cloud'],
+    statusBadge: 'Pre-Deployment Gate',
+  },
+  {
+    id: 'POL-DB-AVAILABILITY',
+    title: 'High Availability Database Access Protection',
+    category: 'POLICY',
+    categoryLabel: 'Reliability Policy',
+    provider: 'Azure',
+    policyCode: 'HIGH_AVAILABILITY_DATABASE_ACCESS_GUARD',
+    description: 'Reliability rule: Active database ingress routes cannot be removed without an approved maintenance window and verified secondary failover path.',
+    targetModal: 'network',
+    tags: ['policy', 'availability', 'database', 'uptime', 'sla', 'failover', 'azure', 'sql', 'port 1433'],
+    statusBadge: 'SLA Guardrail',
+  },
+  {
+    id: 'POL-COST-SPIKE-ALERT',
+    title: 'Cost Surge Anomaly Detection (>50% Spike)',
+    category: 'POLICY',
+    categoryLabel: 'Cost Policy',
+    provider: 'AWS',
+    policyCode: 'COST_ANOMALY_SPIKE_DETECTION_THRESHOLD',
+    description: 'FinOps alerting rule: Any single cloud resource exhibiting a >50% day-over-day cost surge triggers an automated diagnostic incident file.',
+    targetModal: 'cost',
+    tags: ['policy', 'cost spike', 'anomaly detection', 'surge', 'billing alert', 'aws', 'finops', 'threshold'],
+    statusBadge: 'Threshold: >50% Spike',
+  },
+  {
+    id: 'POL-RESOURCE-TAGGING',
+    title: 'Mandatory Cloud Resource Tagging Standard',
+    category: 'POLICY',
+    categoryLabel: 'Compliance Policy',
+    provider: 'GCP',
+    policyCode: 'MANDATORY_RESOURCE_TAGGING_POLICY',
+    description: 'Compliance standard requiring all production clusters and services to maintain valid owner, cost_center, and environment labels.',
+    targetModal: 'change',
+    tags: ['policy', 'compliance', 'tagging', 'labels', 'ownership', 'cost center', 'gcp', 'gke', 'metadata'],
+    statusBadge: 'Compliance Standard',
+  },
+];

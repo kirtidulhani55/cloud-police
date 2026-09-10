@@ -1,0 +1,1601 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* DM Sans has the friendly geometry of Google Sans without copying it. */
+  --font-sans: 'DM Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+:root {
+  /* Restored teal light console palette. */
+  --bg-main: #EEF2F1;
+  --bg-secondary: #EEF2F1;
+  --bg-card: #FFFFFF;
+  --bg-elevated: #FFFFFF;
+  --primary-teal: #0B7F78;
+  --hover-teal: #096B66;
+  --soft-teal: #E4F2EF;
+  --blue-accent: #416F98;
+  --text-main: #202124;
+  --text-secondary: #5F6368;
+  --border: #D6DEDC;
+  --warning-amber: #AD702F;
+  --warning-bg: #FFF3E3;
+  --critical-red: #C8545E;
+  --critical-bg: #FCEBEC;
+  --success-green: #2E8B75;
+}
+
+/*
+ * Components currently use Tailwind's literal light-theme colors. These
+ * scoped overrides keep the existing component API intact and give every
+ * console and marketing card the same low-glare reading palette.
+ */
+html:not(.dark) .bg-\[\#FAF7F2\] {
+  background-color: #EEF2F1;
+}
+
+html:not(.dark) .bg-\[\#FFFFFF\] {
+  background-color: #FFFFFF;
+}
+
+html:not(.dark) .bg-\[\#FFF4DF\] {
+  background-color: #FFF4DF;
+}
+
+html:not(.dark) .bg-\[\#FCFAF7\] {
+  background-color: #FFFFFF;
+}
+
+html:not(.dark) .bg-\[\#FAF7F2\] {
+  background-color: #EEF2F1;
+}
+
+html:not(.dark) .border-\[\#EAE6DD\] {
+  border-color: #D6DEDC;
+}
+
+html:not(.dark) .hover\:bg-\[\#F3E7D1\]:hover {
+  background-color: #F3E7D1;
+}
+
+html:not(.dark) .text-\[\#2B2417\] {
+  color: #2B2417;
+}
+
+html:not(.dark) .text-\[\#7B7468\] {
+  color: #7B7468;
+}
+
+.dark {
+  /* Restored teal dark console palette. */
+  --bg-main: #171A1D;
+  --bg-secondary: #0D1012;
+  --bg-card: #1D2226;
+  --bg-elevated: #242A2F;
+  --primary-teal: #35B3AA;
+  --hover-teal: #48C7BD;
+  --soft-teal: #172321;
+  --blue-accent: #6D9CC0;
+  --text-main: #E8EAED;
+  --text-secondary: #BDC1C6;
+  --border: #2B3237;
+  --warning-amber: #D5A45A;
+  --warning-bg: rgba(213, 164, 90, 0.15);
+  --critical-red: #DD6B73;
+  --critical-bg: rgba(221, 107, 115, 0.15);
+  --success-green: #48B896;
+}
+
+html.dark .dark\:bg-\[\#0F2024\] {
+  background-color: #1A1A1A;
+}
+
+html.dark .dark\:bg-\[\#13282D\] {
+  background-color: #232320;
+}
+
+html.dark .dark\:bg-\[\#183238\] {
+  background-color: #232320;
+}
+
+html.dark .dark\:bg-\[\#1D3B41\] {
+  background-color: #2B2B27;
+}
+
+html.dark .dark\:bg-\[\#13272C\] {
+  background-color: #232320;
+}
+
+html.dark .dark\:bg-\[\#111F2B\] {
+  background-color: #1A1A1A;
+}
+
+html.dark .dark\:border-\[\#29484C\] {
+  border-color: #3A3832;
+}
+
+html.dark .dark\:text-\[\#E4EFED\] {
+  color: #F5F1E8;
+}
+
+html.dark .dark\:text-\[\#9FB5B3\] {
+  color: #A9A39A;
+}
+
+html.dark .dark\:text-\[\#B2C5C3\] {
+  color: #A9A39A;
+}
+
+@layer base {
+  html {
+    color-scheme: light dark;
+  }
+
+  body {
+    font-family: 'DM Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    min-height: 100vh;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  code, pre, .font-mono {
+    font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    letter-spacing: -0.018em;
+  }
+  
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Focus visible accessibility */
+  *:focus-visible {
+    outline: 2px solid #B8720A;
+    outline-offset: 2px;
+  }
+
+  .dark *:focus-visible {
+    outline: 2px solid #F5A623;
+    outline-offset: 2px;
+  }
+}
+
+/* Subtle Technical Grid Pattern */
+.bg-tech-grid {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(95, 119, 121, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(95, 119, 121, 0.06) 1px, transparent 1px);
+}
+
+.dark .bg-tech-grid {
+  background-image: 
+    linear-gradient(to right, rgba(169, 163, 154, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(169, 163, 154, 0.04) 1px, transparent 1px);
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #F5F5F3;
+}
+.dark ::-webkit-scrollbar-track {
+  background: #1A1A1A;
+}
+::-webkit-scrollbar-thumb {
+  background: #D8D8D4;
+  border-radius: 9999px;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #3A3832;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #B8720A;
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #F5A623;
+}
+
+/* --------------------------------------------------------------------------
+ * Flat workspace system
+ * --------------------------------------------------------------------------
+ * The console is intentionally list-first. Surfaces are reserved for menus,
+ * dialogs and destructive confirmations; everyday information blends into the
+ * page and uses spacing plus hairline dividers for structure.
+ */
+.console-flat main {
+  background: var(--bg-main);
+}
+
+.console-flat :is(
+  #incidents-page-container,
+  #cost-page-container,
+  #changes-page-container,
+  #human-approval-system-view,
+  #evidence-store-page
+) > div {
+  max-width: 1440px;
+}
+
+.console-flat :is(
+  #incidents-page-container,
+  #cost-page-container,
+  #changes-page-container,
+  #human-approval-system-view,
+  #evidence-store-page
+) div.rounded-xl.border {
+  background: transparent !important;
+  border-color: transparent !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.console-flat :is(
+  #incidents-page-container,
+  #cost-page-container,
+  #changes-page-container,
+  #human-approval-system-view,
+  #evidence-store-page
+) div.rounded-lg.border {
+  background: transparent !important;
+  border-color: transparent !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.flat-page-summary {
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: var(--text-secondary) !important;
+  font-weight: 600;
+}
+
+.flat-toolbar {
+  padding: 0.25rem 0 0.75rem !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--border) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.flat-search-input {
+  background: transparent !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--border) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.flat-search-input:focus {
+  border-bottom-color: var(--primary-teal) !important;
+  box-shadow: 0 1px 0 var(--primary-teal) !important;
+}
+
+.flat-list {
+  gap: 0 !important;
+  border-top: 1px solid var(--border);
+}
+
+.flat-list-row {
+  padding: 1rem 0.25rem !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--border) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.flat-list-row:hover {
+  background: color-mix(in srgb, var(--primary-teal) 5%, transparent) !important;
+}
+
+.flat-list-row h3 {
+  display: inline;
+  padding-bottom: 0.12rem;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  background-size: 0 1px;
+  transition: background-size 180ms ease, color 180ms ease, font-weight 180ms ease;
+}
+
+.flat-list-row:hover h3,
+.flat-list-row:focus-within h3 {
+  background-size: 100% 1px;
+  font-weight: 700;
+}
+
+.flat-meta > span {
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.flat-meta > span:not(:last-child)::after {
+  content: "·";
+  display: inline-block;
+  margin-left: 0.5rem;
+  color: var(--text-secondary);
+}
+
+.flat-meta svg {
+  display: none;
+}
+
+.console-flat main button svg,
+.console-flat main :is(h1, h2, h3) svg {
+  display: none;
+}
+
+.flat-text-action {
+  position: relative;
+  height: auto !important;
+  padding: 0.35rem 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  color: var(--primary-teal) !important;
+  font-weight: 600;
+}
+
+.flat-text-action::after,
+.flat-tab::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  right: 50%;
+  bottom: 0;
+  height: 1px;
+  background: currentColor;
+  transition: left 180ms ease, right 180ms ease;
+}
+
+.flat-text-action:hover,
+.flat-text-action:focus-visible {
+  font-weight: 700;
+}
+
+.flat-text-action:hover::after,
+.flat-text-action:focus-visible::after,
+.flat-tab:hover::after,
+.flat-tab:focus-visible::after,
+.flat-tab[data-active="true"]::after {
+  left: 0;
+  right: 0;
+}
+
+.flat-detail-view > div.rounded-xl,
+.flat-detail-view > div > div.rounded-xl,
+.flat-detail-view div.rounded-xl.border,
+.flat-detail-view div.rounded-lg.border {
+  background: transparent !important;
+  border-color: transparent !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.flat-detail-view .space-y-1\.5,
+.flat-detail-view .space-y-2,
+.flat-detail-view .space-y-3 {
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 1rem;
+}
+
+.flat-detail-view pre {
+  background: #111827 !important;
+  color: #F8FAFC !important;
+  border: 1px solid #263244 !important;
+  border-radius: 0.375rem !important;
+}
+
+.dark .flat-detail-view pre {
+  background: #080808 !important;
+  color: #F5F5F5 !important;
+  border-color: #2A2A2A !important;
+}
+
+.flat-detail-modal {
+  border-radius: 0.5rem;
+  background: var(--bg-card) !important;
+}
+
+.flat-detail-modal svg {
+  display: none;
+}
+
+.flat-detail-modal .flat-meta > span {
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+}
+
+.flat-detail-modal .flat-finding-list > div {
+  padding: 1rem 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--border) !important;
+  border-radius: 0 !important;
+  color: var(--text-main) !important;
+}
+
+.flat-detail-modal .flat-technical {
+  border-radius: 0 !important;
+}
+
+.flat-tabs {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.25rem;
+  width: auto;
+  padding: 0;
+  background: transparent;
+  overflow-x: auto;
+}
+
+.flat-tab {
+  position: relative;
+  min-height: 2.25rem;
+  padding: 0.35rem 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.flat-tab[data-active="true"] {
+  color: var(--text-main);
+  font-weight: 700;
+}
+
+.flat-tab-count {
+  margin-left: 0.25rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+/* Overview: metrics and cases read as one workspace, not nested cards. */
+#overview-summary-metrics {
+  gap: 0;
+  background: transparent;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.overview-metric {
+  position: relative;
+  padding: 0.8rem 1rem;
+  background: transparent;
+  border: 0;
+  border-right: 1px solid var(--border);
+  color: var(--text-main);
+}
+
+.overview-metric:last-child {
+  border-right: 0;
+}
+
+.overview-metric-label {
+  display: inline-block;
+  padding-bottom: 0.12rem;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  background-size: 0 1px;
+  transition: background-size 180ms ease, color 180ms ease, font-weight 180ms ease;
+}
+
+.overview-metric:hover .overview-metric-label,
+.overview-metric:focus-visible .overview-metric-label {
+  color: var(--text-main);
+  font-weight: 700;
+  background-size: 100% 1px;
+}
+
+#overview-priority-case,
+#risk-distribution-panel {
+  padding: 0.25rem 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.overview-priority-header {
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.overview-case-tab,
+.overview-text-action {
+  position: relative;
+  padding: 0.35rem 0;
+  background: transparent;
+  border: 0;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.overview-case-tab::after,
+.overview-text-action::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  right: 50%;
+  bottom: 0;
+  height: 1px;
+  background: currentColor;
+  transition: left 180ms ease, right 180ms ease;
+}
+
+.overview-case-tab[data-active="true"],
+.overview-case-tab:hover,
+.overview-text-action:hover {
+  color: var(--primary-teal);
+  font-weight: 700;
+}
+
+.overview-case-tab[data-active="true"]::after,
+.overview-case-tab:hover::after,
+.overview-case-tab:focus-visible::after,
+.overview-text-action:hover::after,
+.overview-text-action:focus-visible::after {
+  left: 0;
+  right: 0;
+}
+
+.overview-case-body {
+  padding: 0.25rem 0 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.overview-meta > span {
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+}
+
+.overview-meta > span:not(:last-child)::after {
+  content: "·";
+  display: inline-block;
+  margin-left: 0.5rem;
+  color: var(--text-secondary);
+}
+
+.overview-technical-details {
+  border-top: 1px solid var(--border);
+}
+
+.overview-technical-details > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.55rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.overview-technical-details dt,
+.overview-inline-metrics dt {
+  color: var(--text-secondary);
+}
+
+.overview-technical-details dd,
+.overview-inline-metrics dd {
+  color: var(--text-main);
+  font-family: 'IBM Plex Mono', ui-monospace, monospace;
+  font-weight: 600;
+  text-align: right;
+}
+
+.overview-inline-metrics {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.overview-inline-metrics > div {
+  padding: 0.65rem 0.75rem;
+  border-right: 1px solid var(--border);
+}
+
+.overview-inline-metrics > div:last-child {
+  border-right: 0;
+}
+
+.overview-inline-metrics dd {
+  margin-top: 0.25rem;
+  text-align: left;
+}
+
+.overview-risk-row {
+  padding: 0.75rem 0;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.overview-risk-title {
+  display: inline-block;
+  padding-bottom: 0.1rem;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  background-size: 0 1px;
+  transition: background-size 180ms ease, font-weight 180ms ease;
+}
+
+.overview-risk-row:hover .overview-risk-title,
+.overview-risk-row:focus-visible .overview-risk-title {
+  background-size: 100% 1px;
+  font-weight: 700;
+}
+
+/* Marketing hero uses the same flat, divider-led information hierarchy. */
+.marketing-nav-link {
+  position: relative;
+  padding-block: 0.35rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+  white-space: nowrap;
+  transition: color 180ms ease, font-weight 180ms ease;
+}
+
+.marketing-nav-link::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  right: 50%;
+  bottom: 0;
+  height: 1px;
+  background: currentColor;
+  transition: left 180ms ease, right 180ms ease;
+}
+
+.marketing-nav-link:hover,
+.marketing-nav-link:focus-visible,
+.marketing-nav-link[data-active="true"] {
+  color: var(--primary-teal);
+  font-weight: 700;
+}
+
+.marketing-nav-link:hover::after,
+.marketing-nav-link:focus-visible::after,
+.marketing-nav-link[data-active="true"]::after {
+  left: 0;
+  right: 0;
+}
+
+.marketing-text-link {
+  position: relative;
+  display: inline-block;
+  padding: 0.25rem 0;
+  background: transparent;
+  border: 0;
+}
+
+.marketing-text-link::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  right: 50%;
+  bottom: 0;
+  height: 1px;
+  background: currentColor;
+  transition: left 180ms ease, right 180ms ease;
+}
+
+.marketing-text-link:hover::after,
+.marketing-text-link:focus-visible::after {
+  left: 0;
+  right: 0;
+}
+
+.marketing-text-link:hover {
+  font-weight: 700;
+}
+
+.marketing-trust-line > span:not(:last-child)::after {
+  content: "·";
+  display: inline-block;
+  margin-left: 1.25rem;
+  color: var(--border);
+}
+
+.marketing-incident-preview {
+  background: transparent;
+  color: var(--text-main);
+}
+
+.marketing-preview-section {
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.marketing-code-diff {
+  padding: 0.75rem 0;
+  background: transparent;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.account-select,
+.account-input {
+  width: 100%;
+  min-height: 2.75rem;
+  border: 1px solid #EAE6DD;
+  border-radius: 0.625rem;
+  background: #fff;
+  padding: 0.625rem 0.75rem;
+  color: #2B2417;
+  font-size: 0.875rem;
+  outline: none;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.account-select:focus,
+.account-input:focus {
+  border-color: #B8720A;
+  box-shadow: 0 0 0 3px rgb(184 114 10 / 14%);
+}
+
+.dark .account-select,
+.dark .account-input {
+  border-color: #3A3832;
+  background: #232320;
+  color: #F5F1E8;
+}
+
+.dark .account-select:focus,
+.dark .account-input:focus {
+  border-color: #F5A623;
+  box-shadow: 0 0 0 3px rgb(245 166 35 / 14%);
+}
+
+@media (max-width: 767px) {
+  .flat-tabs {
+    width: 100%;
+    gap: 1rem;
+  }
+
+  .flat-list-row {
+    padding-block: 0.875rem !important;
+  }
+
+}
+
+@media (max-width: 1023px) {
+  .overview-metric:nth-child(2) {
+    border-right: 0;
+  }
+
+  .overview-metric:nth-child(-n + 2) {
+    border-bottom: 1px solid var(--border);
+  }
+}
+
+@media (min-width: 1024px) {
+  .overview-metric:nth-child(2) {
+    border-right: 1px solid var(--border);
+  }
+
+  .overview-metric:nth-child(-n + 2) {
+    border-bottom: 0;
+  }
+}
+
+/* --------------------------------------------------------------------------
+ * Light-theme compatibility palette
+ * --------------------------------------------------------------------------
+ * A few console components retain older literal utility tokens. These scoped
+ * light-mode overrides keep them in the same warm palette without changing
+ * layout, content, typography, or component behavior.
+ */
+html:not(.dark) [class~="bg-[#F4FAF9]"],
+html:not(.dark) [class~="bg-[#EDF5F3]"] {
+  background-color: #FAF7F2 !important;
+}
+
+html:not(.dark) [class~="bg-[#F8FBFA]"] {
+  background-color: #FCFAF7 !important;
+}
+
+html:not(.dark) [class~="bg-[#ECF5F3]"],
+html:not(.dark) [class~="bg-[#EAF5F3]"] {
+  background-color: #FFF4DF !important;
+}
+
+html:not(.dark) [class~="bg-[#DDF1EE]"],
+html:not(.dark) [class~="bg-[#E3EEEC]"],
+html:not(.dark) [class~="bg-[#DDEBE8]"],
+html:not(.dark) [class~="bg-[#F0F6F5]"] {
+  background-color: #F3E7D1 !important;
+}
+
+html:not(.dark) [class~="border-[#D4E4E1]"],
+html:not(.dark) [class~="border-[#C9DAD7]"],
+html:not(.dark) [class~="border-[#C8DEDA]"] {
+  border-color: #EAE6DD !important;
+}
+
+html:not(.dark) [class~="border-[#B8D0CC]"] {
+  border-color: #E3C68F !important;
+}
+
+html:not(.dark) [class~="text-[#18373A]"],
+html:not(.dark) [class~="text-[#102F33]"] {
+  color: #2B2417 !important;
+}
+
+html:not(.dark) [class~="text-[#5F7779]"],
+html:not(.dark) [class~="text-[#176F6B]"] {
+  color: #7B7468 !important;
+}
+
+html:not(.dark) [class~="placeholder-[#5F7779]"]::placeholder {
+  color: #7B7468 !important;
+}
+
+html:not(.dark) [class~="text-[#137D78]"],
+html:not(.dark) [class~="text-[#AD702F]"],
+html:not(.dark) [class~="text-[#E2AA2F]"] {
+  color: #B8720A !important;
+}
+
+html:not(.dark) [class~="bg-[#137D78]"],
+html:not(.dark) [class~="bg-[#AD702F]"] {
+  background-color: #B8720A !important;
+}
+
+html:not(.dark) [class~="bg-[#137D78]/10"],
+html:not(.dark) [class~="bg-[#AD702F]/10"],
+html:not(.dark) [class~="bg-[#E2AA2F]/12"] {
+  background-color: rgb(184 114 10 / 10%) !important;
+}
+
+html:not(.dark) [class~="bg-[#137D78]/15"],
+html:not(.dark) [class~="bg-[#AD702F]/15"] {
+  background-color: rgb(184 114 10 / 15%) !important;
+}
+
+html:not(.dark) [class~="bg-[#137D78]/20"],
+html:not(.dark) [class~="bg-[#E2AA2F]/20"] {
+  background-color: rgb(184 114 10 / 20%) !important;
+}
+
+html:not(.dark) [class~="border-[#137D78]"],
+html:not(.dark) [class~="focus:border-[#137D78]"]:focus {
+  border-color: #B8720A !important;
+}
+
+html:not(.dark) [class~="border-[#AD702F]/20"],
+html:not(.dark) [class~="border-[#AD702F]/25"],
+html:not(.dark) [class~="border-[#AD702F]/30"],
+html:not(.dark) [class~="border-[#E2AA2F]/30"],
+html:not(.dark) [class~="border-[#E2AA2F]/40"] {
+  border-color: rgb(184 114 10 / 30%) !important;
+}
+
+html:not(.dark) [class~="hover:bg-[#DDF1EE]"]:hover,
+html:not(.dark) [class~="hover:bg-[#F0F6F5]"]:hover,
+html:not(.dark) [class~="hover:bg-[#EAF5F3]"]:hover {
+  background-color: #F3E7D1 !important;
+}
+
+html:not(.dark) [class~="hover:text-[#0F6965]"]:hover,
+html:not(.dark) [class~="hover:bg-[#925D25]"]:hover {
+  color: #9A5E05 !important;
+  background-color: #9A5E05 !important;
+}
+
+html:not(.dark) .group:hover [class~="group-hover:text-[#137D78]"],
+html:not(.dark) .group:hover [class~="group-hover:text-[#AD702F]"] {
+  color: #B8720A !important;
+}
+
+html:not(.dark) .group:hover [class~="group-hover:bg-[#137D78]"] {
+  color: #FFFFFF !important;
+  background-color: #B8720A !important;
+}
+
+html:not(.dark) [class~="ring-[#137D78]/15"]:focus {
+  --tw-ring-color: rgb(184 114 10 / 15%) !important;
+}
+
+html:not(.dark) [class~="shadow-[inset_0_2px_0_#137D78]"] {
+  box-shadow: inset 0 2px 0 #B8720A !important;
+}
+
+/* Keep list metadata and action links consistent across every work queue. */
+html:not(.dark) .flat-list-row .flat-meta > span,
+html:not(.dark) .flat-detail-view .flat-meta > span {
+  padding: 0 !important;
+  background: transparent !important;
+  border-color: transparent !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+/* These are navigation actions, not status indicators. */
+html:not(.dark) .flat-text-action {
+  color: #2B2417 !important;
+}
+
+/* Evidence keeps only its SQL query action in the amber accent. */
+html:not(.dark) #evidence-store-page .evidence-sql-action {
+  color: #B8720A !important;
+}
+
+/* Match the Incidents reference: list titles stay dark when hovered/selected. */
+html:not(.dark) .group.flat-list-row:hover h3,
+html:not(.dark) .group.flat-list-row:focus-within h3 {
+  color: #2B2417 !important;
+}
+
+/* Public hero/marketing page light palette. The dark theme remains unchanged. */
+html:not(.dark) .marketing-site [class~="bg-[#F8FAFC]"] {
+  background-color: #FAF7F2 !important;
+}
+
+html:not(.dark) .marketing-site [class~="text-[#172033]"] {
+  color: #2B2417 !important;
+}
+
+html:not(.dark) .marketing-site [class~="text-[#0F766E]"],
+html:not(.dark) .marketing-site [class~="text-[#0F766E]"]:hover {
+  color: #137D78 !important;
+}
+
+html:not(.dark) .marketing-site [class~="bg-[#0F766E]"] {
+  background-color: #137D78 !important;
+}
+
+html:not(.dark) .marketing-site [class~="hover:bg-[#0B625C]"]:hover,
+html:not(.dark) .marketing-site [class~="hover:bg-[#0F6965]"]:hover {
+  background-color: #0F6965 !important;
+}
+
+html:not(.dark) .marketing-site [class~="text-[#526174]"],
+html:not(.dark) .marketing-site [class~="text-[#64748B]"] {
+  color: #7B7468 !important;
+}
+
+html:not(.dark) .marketing-site [class~="border-[#DCE3EA]"] {
+  border-color: #EAE6DD !important;
+}
+
+html:not(.dark) .marketing-site [class~="focus-visible:ring-[#0F766E]"]:focus-visible {
+  --tw-ring-color: #137D78 !important;
+}
+
+/* --------------------------------------------------------------------------
+ * Graphite/gold dark-theme compatibility palette
+ * --------------------------------------------------------------------------
+ * The existing components intentionally keep their class names so the theme
+ * switch remains functional. These dark-only mappings change color tokens
+ * across the console and public hero without changing layout, content,
+ * typography, spacing, icons, or behavior.
+ */
+
+/* Neutral light tokens that still appear in shared component markup. */
+html.dark [class~="bg-[#FAF7F2]"],
+html.dark [class~="bg-[#F4FAF9]"],
+html.dark [class~="bg-[#F8FAFC]"],
+html.dark [class~="bg-[#F8FBFA]"],
+html.dark [class~="bg-[#FCFAF7]"],
+html.dark [class~="bg-[#FFFEFB]"] {
+  background-color: #1A1A1A !important;
+}
+
+html.dark [class~="bg-[#FFFFFF]"],
+html.dark [class~="bg-white"],
+html.dark [class~="bg-[#ECF5F3]"],
+html.dark [class~="bg-[#EAF5F3]"],
+html.dark [class~="bg-[#F1EDE5]"],
+html.dark [class~="bg-[#F3EEE6]"] {
+  background-color: #232320 !important;
+}
+
+html.dark [class~="bg-[#FFF4DF]"],
+html.dark [class~="bg-[#FFF3E3]"],
+html.dark [class~="bg-[#FFF7E7]"] {
+  background-color: #3A2E1B !important;
+}
+
+html.dark [class~="border-[#EAE6DD]"],
+html.dark [class~="border-[#D4E4E1]"],
+html.dark [class~="border-[#D8D1C5]"],
+html.dark [class~="border-[#DCE3EA]"],
+html.dark [class~="border-[#C9DAD7]"],
+html.dark [class~="border-[#C8DEDA]"] {
+  border-color: #3A3832 !important;
+}
+
+html.dark [class~="text-[#2B2417]"],
+html.dark [class~="text-[#18373A]"],
+html.dark [class~="text-[#172033]"],
+html.dark [class~="text-[#20242A]"] {
+  color: #F5F1E8 !important;
+}
+
+html.dark [class~="text-[#7B7468]"],
+html.dark [class~="text-[#5F7779]"],
+html.dark [class~="text-[#526174]"],
+html.dark [class~="text-[#64748B]"],
+html.dark [class~="text-[#66707C]"],
+html.dark [class~="text-[#718789]"] {
+  color: #A9A39A !important;
+}
+
+html.dark [class~="placeholder-[#5F7779]"]::placeholder,
+html.dark [class~="placeholder-[#7B7468]"]::placeholder {
+  color: #A9A39A !important;
+}
+
+/* Gold replaces teal and light-theme amber accents in dark mode. */
+html.dark [class~="text-[#B8720A]"],
+html.dark [class~="text-[#AD702F]"],
+html.dark [class~="text-[#137D78]"],
+html.dark [class~="text-[#0F766E]"] {
+  color: #F5A623 !important;
+}
+
+html.dark [class~="bg-[#B8720A]"],
+html.dark [class~="bg-[#AD702F]"],
+html.dark [class~="bg-[#137D78]"],
+html.dark [class~="bg-[#0F766E]"] {
+  background-color: #F5A623 !important;
+}
+
+html.dark [class~="hover:bg-[#9A5E05]"]:hover,
+html.dark [class~="hover:bg-[#0F6965]"]:hover,
+html.dark [class~="hover:bg-[#0B625C]"]:hover {
+  background-color: #D99516 !important;
+}
+
+html.dark [class~="border-[#B8720A]"],
+html.dark [class~="border-[#137D78]"] {
+  border-color: #F5A623 !important;
+}
+
+/* Graphite page and card surfaces used by dark utility classes. */
+html.dark [class~="dark:bg-[#0B1120]"],
+html.dark [class~="dark:bg-[#0F2024]"],
+html.dark [class~="dark:bg-[#111F2B]"],
+html.dark [class~="dark:bg-[#111827]"] {
+  background-color: #1A1A1A !important;
+}
+
+html.dark [class~="dark:bg-[#0F2024]/90"] {
+  background-color: rgb(26 26 26 / 90%) !important;
+}
+
+html.dark [class~="dark:bg-[#183238]"],
+html.dark [class~="dark:bg-[#13282D]"],
+html.dark [class~="dark:bg-[#131826]"],
+html.dark [class~="dark:bg-[#1B2233]"] {
+  background-color: #232320 !important;
+}
+
+html.dark [class~="dark:bg-[#183238]/75"] {
+  background-color: rgb(35 35 32 / 75%) !important;
+}
+
+html.dark [class~="dark:bg-[#183238]/90"] {
+  background-color: rgb(35 35 32 / 90%) !important;
+}
+
+html.dark [class~="dark:bg-[#13282D]/60"] {
+  background-color: rgb(35 35 32 / 60%) !important;
+}
+
+html.dark [class~="dark:bg-[#1D3B41]"],
+html.dark [class~="dark:bg-[#13272C]"],
+html.dark [class~="dark:bg-[#173036]"],
+html.dark [class~="dark:bg-[#242C40]"] {
+  background-color: #2B2B27 !important;
+}
+
+html.dark [class~="dark:hover:bg-[#183238]"]:hover,
+html.dark [class~="dark:hover:bg-[#13282D]"]:hover,
+html.dark [class~="dark:hover:bg-[#173036]"]:hover,
+html.dark [class~="dark:hover:bg-[#203A3F]"]:hover,
+html.dark [class~="dark:hover:bg-[#242C40]"]:hover,
+html.dark [class~="dark:hover:bg-[#29484C]"]:hover {
+  background-color: #2B2B27 !important;
+}
+
+html.dark [class~="dark:hover:bg-[#183238]/60"]:hover {
+  background-color: rgb(43 43 39 / 60%) !important;
+}
+
+html.dark [class~="dark:border-[#29484C]"],
+html.dark [class~="dark:border-[#242C40]"],
+html.dark [class~="dark:border-[#263244]"],
+html.dark [class~="dark:border-[#31565A]"],
+html.dark [class~="dark:border-[#315258]"],
+html.dark [class~="dark:border-[#36565A]"] {
+  border-color: #3A3832 !important;
+}
+
+html.dark [class~="dark:divide-[#29484C]"] {
+  border-color: #3A3832 !important;
+}
+
+/* Warm primary and secondary text. Semantic green and red tokens are left alone. */
+html.dark [class~="dark:text-[#E4EFED]"],
+html.dark [class~="dark:text-[#E5E7EB]"],
+html.dark [class~="dark:text-[#E7EAF0]"],
+html.dark [class~="dark:text-[#E8EAED]"],
+html.dark [class~="dark:text-[#F5F5F5]"],
+html.dark [class~="dark:text-[#F8FAFC]"] {
+  color: #F5F1E8 !important;
+}
+
+html.dark [class~="dark:hover:text-[#E4EFED]"]:hover,
+html.dark [class~="dark:hover:text-[#E7EAF0]"]:hover {
+  color: #F5F1E8 !important;
+}
+
+html.dark [class~="dark:text-[#9FB5B3]"],
+html.dark [class~="dark:text-[#B2C5C3]"],
+html.dark [class~="dark:text-[#AAB6C5]"],
+html.dark [class~="dark:text-[#94A3B8]"],
+html.dark [class~="dark:text-[#9BA4B8]"],
+html.dark [class~="dark:text-[#8B93A8]"],
+html.dark [class~="dark:text-[#6B7387]"],
+html.dark [class~="dark:text-[#789092]"],
+html.dark [class~="dark:text-[#C3CDD6]"] {
+  color: #A9A39A !important;
+}
+
+html.dark [class~="dark:placeholder-[#9FB5B3]"]::placeholder,
+html.dark [class~="dark:placeholder-[#B2C5C3]"]::placeholder,
+html.dark [class~="dark:placeholder:text-[#789092]"]::placeholder {
+  color: #A9A39A !important;
+}
+
+/* Gold accent tokens, including the public hero page. */
+html.dark [class~="dark:text-[#35B3AA]"],
+html.dark [class~="dark:text-[#48B8AE]"],
+html.dark [class~="dark:text-[#48C5BB]"],
+html.dark [class~="dark:text-[#48C7BD]"],
+html.dark [class~="dark:text-[#5EEAD4]"],
+html.dark [class~="dark:text-[#2DD4BF]"],
+html.dark [class~="dark:text-[#D5A45A]"],
+html.dark [class~="dark:text-[#E3A63E]"],
+html.dark [class~="dark:text-[#E4B76C]"],
+html.dark [class~="dark:text-[#E5BB78]"],
+html.dark [class~="dark:text-[#E5C47B]"],
+html.dark [class~="dark:text-[#E8BD5C]"] {
+  color: #F5A623 !important;
+}
+
+html.dark [class~="dark:bg-[#35B3AA]"],
+html.dark [class~="dark:bg-[#2DD4BF]"],
+html.dark [class~="dark:bg-[#D5A45A]"],
+html.dark [class~="dark:bg-[#E3A63E]"] {
+  background-color: #F5A623 !important;
+}
+
+html.dark [class~="dark:bg-[#35B3AA]/5"] {
+  background-color: rgb(245 166 35 / 5%) !important;
+}
+
+html.dark [class~="dark:bg-[#35B3AA]/8"] {
+  background-color: rgb(245 166 35 / 8%) !important;
+}
+
+html.dark [class~="dark:bg-[#35B3AA]/15"],
+html.dark [class~="dark:bg-[#D5A45A]/15"],
+html.dark [class~="dark:bg-[#E3A63E]/20"] {
+  background-color: rgb(245 166 35 / 15%) !important;
+}
+
+html.dark [class~="dark:bg-[#35B3AA]/25"] {
+  background-color: rgb(245 166 35 / 25%) !important;
+}
+
+html.dark [class~="dark:bg-[#D5A45A]/10"] {
+  background-color: rgb(245 166 35 / 10%) !important;
+}
+
+html.dark [class~="dark:hover:bg-[#48C5BB]"]:hover,
+html.dark [class~="dark:hover:bg-[#48C7BD]"]:hover,
+html.dark [class~="dark:hover:bg-[#5EEAD4]"]:hover {
+  background-color: #D99516 !important;
+}
+
+html.dark [class~="dark:hover:text-[#35B3AA]"]:hover,
+html.dark [class~="dark:hover:text-[#48C7BD]"]:hover {
+  color: #D99516 !important;
+}
+
+html.dark [class~="dark:border-[#35B3AA]"],
+html.dark [class~="dark:border-[#D5A45A]"],
+html.dark [class~="dark:border-[#E3A63E]"] {
+  border-color: #F5A623 !important;
+}
+
+html.dark [class~="dark:border-[#35B3AA]/20"],
+html.dark [class~="dark:border-[#35B3AA]/30"],
+html.dark [class~="dark:border-[#D5A45A]/40"],
+html.dark [class~="dark:border-[#E3A63E]/40"],
+html.dark [class~="dark:group-hover:border-[#35B3AA]/50"] {
+  border-color: rgb(245 166 35 / 35%) !important;
+}
+
+html.dark [class~="dark:focus-visible:ring-[#35B3AA]"]:focus-visible,
+html.dark [class~="dark:focus:border-[#35B3AA]"]:focus,
+html.dark [class~="dark:focus-within:border-[#35B3AA]"]:focus-within {
+  --tw-ring-color: #F5A623 !important;
+  border-color: #F5A623 !important;
+}
+
+html.dark [class~="dark:focus-visible:text-[#35B3AA]"]:focus-visible {
+  color: #F5A623 !important;
+}
+
+html.dark [class~="dark:selection:bg-[#35B3AA]/25"],
+html.dark [class~="dark:selection:bg-[#35B3AA]/30"]::selection {
+  background-color: rgb(245 166 35 / 25%) !important;
+}
+
+html.dark [class~="dark:selection:text-[#35B3AA]"]::selection {
+  color: #F5A623 !important;
+}
+
+html.dark [class~="dark:group-hover:bg-[#35B3AA]"]:hover,
+html.dark [class~="dark:group-hover:bg-[#35B3AA]"]:focus-within {
+  background-color: #F5A623 !important;
+}
+
+html.dark [class~="dark:group-hover:text-[#35B3AA]"]:hover,
+html.dark [class~="dark:group-hover:text-[#E3A63E]"]:hover {
+  color: #F5A623 !important;
+}
+
+html.dark [class~="dark:text-[#0F2024]"],
+html.dark [class~="dark:text-[#0B1120]"],
+html.dark [class~="dark:group-hover:text-[#0F2024]"]:hover {
+  color: #1A1A1A !important;
+}
+
+html.dark .group.flat-list-row:is(:hover, :focus-within) h3 { color: #F5F1E8 !important; }
+
+/* Row actions keep readable white text in every interaction state. */
+html.dark .flat-text-action:not(.evidence-sql-action),
+html.dark .flat-text-action:not(.evidence-sql-action):is(:hover, :focus, :active),
+html.dark .flat-text-action:not(.evidence-sql-action) span {
+  color: #F5F1E8 !important;
+}
+
+html.dark .evidence-sql-action,
+html.dark .evidence-sql-action:is(:hover, :focus, :active) {
+  color: #F5A623 !important;
+}
+
+/* Consistent metadata, surfaces and accessible space around the assistant. */
+.console-flat main { padding-bottom: 7rem !important; }
+.console-flat .flat-meta > span {
+  background: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+.console-flat .flat-meta > span[class*="text-[#4F7FA3]"] {
+  color: var(--text-secondary, #A9A39A) !important;
+}
+#header-brand-area svg[aria-label="Cloud Police Icon"] path { stroke: #B8720A; }
+html.dark #header-brand-area svg[aria-label="Cloud Police Icon"] path { stroke: #F5A623; }
+button[aria-label="Ask Cloud Police"] svg { filter: none !important; }
+button[aria-label="Ask Cloud Police"] svg path { stroke: #1A1A1A; }
+.overview-panel {
+  background: #FFFFFF;
+  border: 1px solid #EAE6DD;
+  border-radius: 12px;
+  color: #2B2417;
+}
+.overview-detail-row + .overview-detail-row { border-top: 1px solid #EAE6DD; }
+html.dark .overview-panel { background: #232320; color: #F5F1E8; border-color: #393830; }
+html.dark .overview-detail-row + .overview-detail-row { border-color: #393830; }
+
+/* --------------------------------------------------------------------------
+ * Restored teal palette
+ * --------------------------------------------------------------------------
+ * The current component markup keeps its existing class names. These final
+ * colour-only mappings restore the earlier teal light/dark appearance without
+ * changing layout, text, typography, data, or behaviour.
+ */
+:root {
+  --bg-main: #EEF2F1;
+  --bg-secondary: #EEF2F1;
+  --bg-card: #FFFFFF;
+  --bg-elevated: #FFFFFF;
+  --primary-teal: #0B7F78;
+  --hover-teal: #096B66;
+  --soft-teal: #E4F2EF;
+  --blue-accent: #416F98;
+  --text-main: #202124;
+  --text-secondary: #5F6368;
+  --border: #D6DEDC;
+  --warning-amber: #AD702F;
+}
+
+.dark {
+  --bg-main: #171A1D;
+  --bg-secondary: #0D1012;
+  --bg-card: #1D2226;
+  --bg-elevated: #242A2F;
+  --primary-teal: #35B3AA;
+  --hover-teal: #48C7BD;
+  --soft-teal: #172321;
+  --blue-accent: #6D9CC0;
+  --text-main: #E8EAED;
+  --text-secondary: #BDC1C6;
+  --border: #2B3237;
+  --warning-amber: #D5A45A;
+}
+
+html:not(.dark) [class~="bg-[#FAF7F2]"],
+html:not(.dark) [class~="bg-[#F7F2EA]"],
+html:not(.dark) [class~="bg-[#F4FAF9]"],
+html:not(.dark) [class~="bg-[#F5F7FB]"] {
+  background-color: #EEF2F1 !important;
+}
+html:not(.dark) [class~="bg-[#FCFAF7]"] { background-color: #FFFFFF !important; }
+html:not(.dark) [class~="bg-[#FFF4DF]"] { background-color: #ECF5F3 !important; }
+html:not(.dark) [class~="border-[#EAE6DD]"],
+html:not(.dark) [class~="border-[#D4E4E1]"],
+html:not(.dark) [class~="border-[#C9DAD7]"],
+html:not(.dark) [class~="border-[#C8DEDA]"] { border-color: #D6DEDC !important; }
+html:not(.dark) [class~="text-[#2B2417]"] { color: #18373A !important; }
+html:not(.dark) [class~="text-[#7B7468]"] { color: #5F7779 !important; }
+html:not(.dark) [class~="text-[#B8720A]"],
+html:not(.dark) [class~="text-[#9A5E05]"],
+html:not(.dark) [class~="text-[#137D78]"] { color: #137D78 !important; }
+html:not(.dark) [class~="bg-[#B8720A]"],
+html:not(.dark) [class~="bg-[#9A5E05]"],
+html:not(.dark) [class~="bg-[#137D78]"] { background-color: #137D78 !important; }
+html:not(.dark) [class~="hover:bg-[#9A5E05]"]:hover { background-color: #0F6965 !important; }
+html:not(.dark) [class~="hover:bg-[#F3E7D1]"]:hover { background-color: #DDF1EE !important; }
+html:not(.dark) [class~="group-hover:text-[#B8720A]"]:hover { color: #137D78 !important; }
+html:not(.dark) .flat-text-action { color: #18373A !important; }
+html:not(.dark) #evidence-store-page .evidence-sql-action { color: #137D78 !important; }
+html:not(.dark) .overview-panel { background: #FFFFFF; color: #18373A; border-color: #D6DEDC; }
+html:not(.dark) .overview-detail-row + .overview-detail-row { border-color: #D6DEDC; }
+html:not(.dark) *:focus-visible { outline-color: #137D78; }
+
+html.dark [class~="bg-[#FAF7F2]"],
+html.dark [class~="bg-[#F7F2EA]"],
+html.dark [class~="bg-[#F4FAF9]"],
+html.dark [class~="dark:bg-[#0F2024]"],
+html.dark [class~="dark:bg-[#111F2B]"] { background-color: #171A1D !important; }
+html.dark [class~="bg-[#FFFFFF]"],
+html.dark [class~="bg-white"],
+html.dark [class~="bg-[#FFF4DF]"],
+html.dark [class~="dark:bg-[#183238]"],
+html.dark [class~="dark:bg-[#13282D]"] { background-color: #1D2226 !important; }
+html.dark [class~="bg-[#FCFAF7]"],
+html.dark [class~="dark:bg-[#1D3B41]"],
+html.dark [class~="dark:bg-[#13272C]"] { background-color: #242A2F !important; }
+html.dark [class~="border-[#EAE6DD]"],
+html.dark [class~="dark:border-[#29484C]"],
+html.dark [class~="dark:border-[#242C40]"] { border-color: #2B3237 !important; }
+html.dark [class~="text-[#2B2417]"],
+html.dark [class~="dark:text-[#E4EFED]"],
+html.dark [class~="dark:text-[#F5F1E8]"] { color: #E8EAED !important; }
+html.dark [class~="text-[#7B7468]"],
+html.dark [class~="dark:text-[#9FB5B3]"],
+html.dark [class~="dark:text-[#A9A39A]"] { color: #BDC1C6 !important; }
+html.dark [class~="text-[#B8720A]"],
+html.dark [class~="text-[#9A5E05]"],
+html.dark [class~="dark:text-[#35B3AA]"],
+html.dark [class~="dark:text-[#48C7BD]"] { color: #35B3AA !important; }
+html.dark [class~="bg-[#B8720A]"],
+html.dark [class~="bg-[#9A5E05]"],
+html.dark [class~="dark:bg-[#35B3AA]"] { background-color: #35B3AA !important; }
+html.dark [class~="hover:bg-[#9A5E05]"]:hover,
+html.dark [class~="dark:hover:bg-[#48C7BD]"]:hover { background-color: #48C7BD !important; }
+html.dark [class~="dark:text-[#0F2024]"],
+html.dark [class~="dark:group-hover:text-[#0F2024]"]:hover { color: #0F2024 !important; }
+html.dark [class~="dark:text-[#D5A45A]"] { color: #D5A45A !important; }
+html.dark [class~="dark:bg-[#D5A45A]"] { background-color: #D5A45A !important; }
+html.dark [class~="dark:border-[#D5A45A]"] { border-color: #D5A45A !important; }
+html.dark .flat-text-action:not(.evidence-sql-action),
+html.dark .flat-text-action:not(.evidence-sql-action) span { color: #E8EAED !important; }
+html.dark .evidence-sql-action { color: #35B3AA !important; }
+html.dark .overview-panel { background: #1D2226; color: #E8EAED; border-color: #2B3237; }
+html.dark .overview-detail-row + .overview-detail-row { border-color: #2B3237; }
+html.dark *:focus-visible { outline-color: #35B3AA; }
+html.dark #header-brand-area svg[aria-label="Cloud Police Icon"] path { stroke: #35B3AA; }
+html:not(.dark) #header-brand-area svg[aria-label="Cloud Police Icon"] path { stroke: #137D78; }
+html.dark button[aria-label="Ask Cloud Police"] svg path { stroke: #0F2024; }
+
+/* Reference black surfaces: page background and cards only. */
+html.dark {
+  --bg-main: #0D0D0D;
+  --bg-secondary: #0D0D0D;
+  --bg-card: #1A1A19;
+  --bg-elevated: #1A1A19;
+}
+
+html.dark body,
+html.dark #root,
+html.dark .console-flat,
+html.dark .console-flat main {
+  background-color: #0D0D0D !important;
+}
+
+html.dark [class~="bg-[#FAF7F2]"],
+html.dark [class~="bg-[#F7F2EA]"],
+html.dark [class~="bg-[#F4FAF9]"],
+html.dark [class~="bg-[#F8FAFC]"],
+html.dark [class~="bg-[#F8FBFA]"],
+html.dark [class~="bg-[#FCFAF7]"],
+html.dark [class~="bg-[#FFFEFB]"],
+html.dark [class~="dark:bg-[#0B1120]"],
+html.dark [class~="dark:bg-[#0F2024]"],
+html.dark [class~="dark:bg-[#0F2024]/90"],
+html.dark [class~="dark:bg-[#111F2B]"],
+html.dark [class~="dark:bg-[#111827]"] {
+  background-color: #0D0D0D !important;
+}
+
+html.dark [class~="bg-[#FFFFFF]"],
+html.dark [class~="bg-white"],
+html.dark [class~="bg-[#FFF4DF]"],
+html.dark [class~="bg-[#ECF5F3]"],
+html.dark [class~="bg-[#EAF5F3]"],
+html.dark [class~="bg-[#F1EDE5]"],
+html.dark [class~="bg-[#F3EEE6]"],
+html.dark [class~="dark:bg-[#183238]"],
+html.dark [class~="dark:bg-[#13282D]"],
+html.dark [class~="dark:bg-[#131826]"],
+html.dark [class~="dark:bg-[#1B2233]"],
+html.dark [class~="dark:bg-[#1D3B41]"],
+html.dark [class~="dark:bg-[#13272C]"],
+html.dark [class~="dark:bg-[#173036]"],
+html.dark [class~="dark:bg-[#242C40]"] {
+  background-color: #1A1A19 !important;
+}
+
+html.dark .account-select,
+html.dark .account-input,
+html.dark .overview-panel {
+  background-color: #1A1A19 !important;
+}
+
+html.dark ::-webkit-scrollbar-track {
+  background: #0D0D0D;
+}
+
+/* Softer dark-theme typography: warm off-white primary text and warm-grey
+ * supporting text. Accent and semantic status colours remain unchanged. */
+html.dark {
+  --text-main: #D8D5CC;
+  --text-secondary: #AAA7A0;
+}
+
+html.dark [class~="text-[#2B2417]"],
+html.dark [class~="text-[#18373A]"],
+html.dark [class~="text-[#20242A]"],
+html.dark [class~="dark:text-[#E4EFED]"],
+html.dark [class~="dark:text-[#E5E7EB]"],
+html.dark [class~="dark:text-[#E7EAF0]"],
+html.dark [class~="dark:text-[#E8EAED]"],
+html.dark [class~="dark:text-[#F5F1E8]"],
+html.dark [class~="dark:text-[#F5F5F5]"],
+html.dark [class~="dark:text-[#F8FAFC]"] {
+  color: #D8D5CC !important;
+}
+
+html.dark [class~="text-[#7B7468]"],
+html.dark [class~="text-[#5F7779]"],
+html.dark [class~="text-[#66707C]"],
+html.dark [class~="dark:text-[#9FB5B3]"],
+html.dark [class~="dark:text-[#B2C5C3]"],
+html.dark [class~="dark:text-[#AAB6C5]"],
+html.dark [class~="dark:text-[#94A3B8]"],
+html.dark [class~="dark:text-[#9BA4B8]"],
+html.dark [class~="dark:text-[#8B93A8]"],
+html.dark [class~="dark:text-[#789092]"],
+html.dark [class~="dark:text-[#C3CDD6]"] {
+  color: #AAA7A0 !important;
+}
+
+html.dark [class~="dark:hover:text-[#E4EFED]"],
+html.dark [class~="dark:hover:text-[#E7EAF0]"] {
+  color: #D8D5CC !important;
+}
+
+html.dark [class~="dark:placeholder-[#9FB5B3]"]::placeholder,
+html.dark [class~="dark:placeholder-[#B2C5C3]"]::placeholder,
+html.dark [class~="dark:placeholder:text-[#789092]"]::placeholder {
+  color: #AAA7A0 !important;
+}
+
+html.dark .group.flat-list-row:is(:hover, :focus-within) h3,
+html.dark .flat-text-action:not(.evidence-sql-action),
+html.dark .flat-text-action:not(.evidence-sql-action):is(:hover, :focus, :active),
+html.dark .flat-text-action:not(.evidence-sql-action) span,
+html.dark .overview-panel,
+html.dark .account-select,
+html.dark .account-input {
+  color: #D8D5CC !important;
+}
+
+/* Softer primary text in the light-theme Overview cards only. */
+html:not(.dark) #overview-summary-metrics,
+html:not(.dark) .overview-details .overview-panel,
+html:not(.dark) #overview-priority-case {
+  color: #40565A !important;
+}
+
+html:not(.dark) #overview-summary-metrics [class~="text-[#2B2417]"],
+html:not(.dark) .overview-details .overview-panel [class~="text-[#2B2417]"],
+html:not(.dark) #overview-priority-case [class~="text-[#2B2417]"],
+html:not(.dark) .overview-details .flat-text-action {
+  color: #40565A !important;
+}
+
+/* Signed-in console only: keep navigation softly tinted and data workspace white. */
+html:not(.dark) .console-flat,
+html:not(.dark) .console-flat main {
+  background-color: #FFFFFF !important;
+}
+
+html:not(.dark) .console-flat .console-sidebar-surface {
+  background-color: #EEF2F1 !important;
+}
+
+/* Overview only: match the sidebar surface while preserving four clear cards. */
+html:not(.dark) .console-flat main.overview-main-surface {
+  background-color: #EEF2F1 !important;
+}
+
+html:not(.dark) .console-flat main.overview-main-surface #overview-summary-metrics {
+  gap: 0.75rem;
+  border-top: 0;
+  border-bottom: 0;
+}
+
+html:not(.dark) .console-flat main.overview-main-surface #overview-summary-metrics .overview-metric {
+  background-color: #FFFFFF;
+  border: 1px solid #D6DEDC;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 2px rgb(15 44 46 / 6%);
+}
+
+/* Incident titles stay readable without becoming sharply bold on hover/focus. */
+.console-flat #incidents-page-container .incident-list-title,
+.console-flat #incidents-page-container .flat-list-row:hover .incident-list-title,
+.console-flat #incidents-page-container .flat-list-row:focus-within .incident-list-title {
+  font-weight: 500;
+}

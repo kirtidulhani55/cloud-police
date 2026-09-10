@@ -1,0 +1,8 @@
+{
+  "name": "Cloud Police — AI Multi-Cloud Governance",
+  "description": "Next-gen marketing website and AI copilot for AWS, Azure, and GCP security, cost, and change governance.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

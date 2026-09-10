@@ -1,0 +1,169 @@
+kind: source
+name: cloudpolice-bigquery
+type: bigquery
+project: cloudpolice-506015
+location: US
+writeMode: blocked
+allowedDatasets:
+  - cloud_police
+maxQueryResultRows: 50
+maximumBytesBilled: 104857600
+---
+kind: tool
+name: get-firewall-denies
+type: bigquery-sql
+source: cloudpolice-bigquery
+description: Get recent firewall DENY events for one cloud provider.
+parameters:
+  - name: cloud_provider
+    type: string
+    description: Cloud provider such as AWS, AZURE, or GCP.
+statement: |
+  SELECT event_id, event_ts, cloud_provider, source_resource,
+         destination_resource, dest_port, protocol, action,
+         rule_name, appliance_ip, environment, region, severity
+  FROM `cloudpolice-506015.cloud_police.firewall_logs`
+  WHERE action = 'DENY'
+    AND UPPER(cloud_provider) = UPPER(@cloud_provider)
+  ORDER BY event_ts DESC
+  LIMIT 20;
+---
+kind: tool
+name: get-connectivity-failures
+type: bigquery-sql
+source: cloudpolice-bigquery
+description: Get recent failed connectivity tests for one cloud provider.
+parameters:
+  - name: cloud_provider
+    type: string
+    description: Cloud provider such as AWS, AZURE, or GCP.
+statement: |
+  SELECT test_id, test_ts, cloud_provider, source_resource,
+         target_resource, target_port, result, latency_ms,
+         environment, region
+  FROM `cloudpolice-506015.cloud_police.connectivity_tests`
+  WHERE result != 'SUCCESS'
+    AND UPPER(cloud_provider) = UPPER(@cloud_provider)
+  ORDER BY test_ts DESC
+  LIMIT 20;
+---
+kind: tool
+name: get-terraform-changes
+type: bigquery-sql
+source: cloudpolice-bigquery
+description: Get recent Terraform changes for one cloud provider.
+parameters:
+  - name: cloud_provider
+    type: string
+    description: Cloud provider such as AWS, AZURE, or GCP.
+statement: |
+  SELECT diff_id, diff_ts, cloud_provider, incident_id,
+         module_path, resource_address, change_type,
+         before_json, after_json, validation_status,
+         approval_status, environment
+  FROM `cloudpolice-506015.cloud_police.terraform_diffs`
+  WHERE UPPER(cloud_provider) = UPPER(@cloud_provider)
+  ORDER BY diff_ts DESC
+  LIMIT 20;
+---
+kind: tool
+name: get-cost-anomalies
+type: bigquery-sql
+source: cloudpolice-bigquery
+description: Find the latest cloud resources whose daily cost is above the normal baseline.
+parameters:
+  - name: cloud_provider
+    type: string
+    description: Cloud provider such as AWS, AZURE, or GCP.
+statement: |
+  WITH latest_cost AS (
+    SELECT *,
+           ROW_NUMBER() OVER (
+             PARTITION BY cloud_provider, resource_name
+             ORDER BY usage_date DESC
+           ) AS row_number
+    FROM `cloudpolice-506015.cloud_police.cost_events`
+    WHERE UPPER(cloud_provider) = UPPER(@cloud_provider)
+  )
+  SELECT cost_id, usage_date, cloud_provider, account_id,
+         resource_group, resource_name, service,
+         daily_cost_usd, baseline_daily_cost_usd,
+         ROUND(
+           100 * SAFE_DIVIDE(
+             daily_cost_usd - baseline_daily_cost_usd,
+             baseline_daily_cost_usd
+           ),
+           1
+         ) AS increase_pct,
+         ROUND(
+           (daily_cost_usd - baseline_daily_cost_usd) * 30,
+           2
+         ) AS estimated_monthly_extra_usd,
+         CASE
+           WHEN daily_cost_usd >= baseline_daily_cost_usd * 2
+             THEN 'HIGH'
+           WHEN daily_cost_usd >= baseline_daily_cost_usd * 1.5
+             THEN 'MEDIUM'
+           ELSE 'LOW'
+         END AS severity,
+         environment, region, currency
+  FROM latest_cost
+  WHERE row_number = 1
+    AND daily_cost_usd >= baseline_daily_cost_usd * 1.25
+  ORDER BY increase_pct DESC
+  LIMIT 20;
+---
+kind: tool
+name: get-resource-cost-history
+type: bigquery-sql
+source: cloudpolice-bigquery
+description: Get recent daily cost history for one cloud resource.
+parameters:
+  - name: cloud_provider
+    type: string
+    description: Cloud provider such as AWS, AZURE, or GCP.
+  - name: resource_name
+    type: string
+    description: Exact resource name returned by get-cost-anomalies.
+statement: |
+  SELECT cost_id, usage_date, cloud_provider, account_id,
+         resource_group, resource_name, service,
+         daily_cost_usd, baseline_daily_cost_usd,
+         environment, region, currency
+  FROM `cloudpolice-506015.cloud_police.cost_events`
+  WHERE UPPER(cloud_provider) = UPPER(@cloud_provider)
+    AND resource_name = @resource_name
+  ORDER BY usage_date DESC
+  LIMIT 30;
+
+---
+kind: tool
+name: get-proposed-changes
+type: bigquery-sql
+source: cloudpolice-bigquery
+description: Get proposed Terraform changes waiting for safety review.
+parameters:
+  - name: cloud_provider
+    type: string
+    description: Cloud provider such as AWS, AZURE, or GCP.
+statement: |
+  SELECT
+    change_id,
+    proposed_ts,
+    cloud_provider,
+    environment,
+    module_path,
+    resource_address,
+    change_type,
+    before_json,
+    after_json,
+    change_summary,
+    estimated_monthly_cost_change_usd,
+    approval_status
+  FROM `cloudpolice-506015.cloud_police.proposed_changes`
+  WHERE UPPER(cloud_provider) = UPPER(@cloud_provider)
+    AND approval_status = 'PENDING_REVIEW'
+  ORDER BY proposed_ts DESC
+  LIMIT 20;
+
+   

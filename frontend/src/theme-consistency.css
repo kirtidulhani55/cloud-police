@@ -1,0 +1,104 @@
+/* Final colour-only layer. Loaded after index.css so legacy amber/gold theme
+ * mappings cannot replace the Cloud Police teal brand. */
+:root {
+  --cp-page: #F5F7FB;
+  --cp-surface: #FFFFFF;
+  --cp-surface-soft: #ECF5F3;
+  --cp-text: #18373A;
+  --cp-text-muted: #5F7779;
+  --cp-border: #D4E4E1;
+  --cp-brand: #137D78;
+  --cp-brand-hover: #0F6965;
+}
+
+html.dark {
+  --cp-page: #0D0D0D;
+  --cp-surface: #1A1A19;
+  --cp-surface-soft: #172321;
+  --cp-text: #D8D5CC;
+  --cp-text-muted: #AAA7A0;
+  --cp-border: #2B3237;
+  --cp-brand: #35B3AA;
+  --cp-brand-hover: #48C7BD;
+}
+
+/* Light public theme */
+html:not(.dark) .marketing-site,
+html:not(.dark) .marketing-site [class~="bg-[#F4FAF9]"],
+html:not(.dark) .marketing-site [class~="bg-[#F8FAFC]"] {
+  background-color: var(--cp-page) !important;
+}
+
+html:not(.dark) .marketing-site [class~="bg-[#ECF5F3]"],
+html:not(.dark) .marketing-site [class~="bg-[#EAF5F3]"],
+html:not(.dark) .marketing-site [class~="bg-[#FFF4DF]"] {
+  background-color: var(--cp-surface-soft) !important;
+}
+
+html:not(.dark) .marketing-site [class~="text-[#137D78]"],
+html:not(.dark) .marketing-site [class~="text-[#0F766E]"],
+html:not(.dark) .marketing-site [class~="text-[#B8720A]"],
+html:not(.dark) .marketing-site [class~="text-[#E3A63E]"] {
+  color: var(--cp-brand) !important;
+}
+
+html:not(.dark) .marketing-site [class~="bg-[#137D78]"],
+html:not(.dark) .marketing-site [class~="bg-[#0F766E]"],
+html:not(.dark) .marketing-site [class~="bg-[#B8720A]"],
+html:not(.dark) .marketing-site [class~="bg-[#E3A63E]"] {
+  background-color: var(--cp-brand) !important;
+}
+
+html:not(.dark) .marketing-site [class~="hover:bg-[#0F6965]"]:hover,
+html:not(.dark) .marketing-site [class~="hover:bg-[#0B625C]"]:hover,
+html:not(.dark) .marketing-site [class~="hover:bg-[#9A5E05]"]:hover {
+  background-color: var(--cp-brand-hover) !important;
+}
+
+/* Dark public theme */
+html.dark .marketing-site,
+html.dark .marketing-site [class~="dark:bg-[#0B1120]"],
+html.dark .marketing-site [class~="dark:bg-[#0F2024]"],
+html.dark .marketing-site [class~="dark:bg-[#111827]"] {
+  background-color: var(--cp-page) !important;
+}
+
+html.dark .marketing-site [class~="dark:bg-[#183238]"],
+html.dark .marketing-site [class~="dark:bg-[#13282D]"],
+html.dark .marketing-site [class~="dark:bg-[#131826]"],
+html.dark .marketing-site [class~="dark:bg-[#1B2233]"] {
+  background-color: var(--cp-surface) !important;
+}
+
+html.dark .marketing-site [class~="dark:text-[#35B3AA]"],
+html.dark .marketing-site [class~="dark:text-[#48C7BD]"],
+html.dark .marketing-site [class~="dark:text-[#5EEAD4]"],
+html.dark .marketing-site [class~="dark:text-[#2DD4BF]"],
+html.dark .marketing-site [class~="text-[#E3A63E]"] {
+  color: var(--cp-brand) !important;
+}
+
+html.dark .marketing-site [class~="dark:bg-[#35B3AA]"],
+html.dark .marketing-site [class~="dark:bg-[#2DD4BF]"],
+html.dark .marketing-site [class~="bg-[#E3A63E]"] {
+  background-color: var(--cp-brand) !important;
+}
+
+html.dark .marketing-site [class~="dark:hover:bg-[#48C7BD]"]:hover,
+html.dark .marketing-site [class~="dark:hover:bg-[#5EEAD4]"]:hover {
+  background-color: var(--cp-brand-hover) !important;
+}
+
+/* Keep the brand mark and keyboard focus teal. Semantic warning, danger and
+ * success colours outside the marketing brand remain unchanged. */
+html.dark .marketing-site svg[aria-label="Cloud Police Icon"] path {
+  stroke: var(--cp-brand) !important;
+}
+
+html:not(.dark) .marketing-site *:focus-visible {
+  outline-color: #137D78 !important;
+}
+
+html.dark .marketing-site *:focus-visible {
+  outline-color: #35B3AA !important;
+}
